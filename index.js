@@ -1,142 +1,110 @@
-const getJson = require("./jsonData.js")
-const jsonData = getJson()
-var obj = JSON.parse(jsonData);
+const getPincodes = require("./Data/1-Pincodes.js");
+const getStateAssociatedCodes = require("./Data/2-State-Associated-Codes.js");
+const getBothAssociatedCodes = require("./Data/3-Associated-Codes(2D-Array).js");
 
-const getJson2 = require("./jsonData2.js")
-const jsonData2 = getJson2()
-var obj2 = JSON.parse(jsonData2);
+const pincodes = JSON.parse(getPincodes());
+const stateAssociatedCodes = JSON.parse(getStateAssociatedCodes());
+const bothAssociatedCodes = JSON.parse(getBothAssociatedCodes());
 
-const getJson3 = require("./jsonData3.js")
-const jsonData3 = getJson3()
-var obj3 = JSON.parse(jsonData3);
+const origin = 683504;
+const destination = 757093;
+const weight = 100;
 
-const origin = 577573
-const destination = 641022
-const weight = 100
+let oda = 0;
+let originCode = "";
+let destinationCode = "";
 
-var ODA = 0
-// Access the data
-//origin
-console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-console.log("The data for Origin:")
-var flag1 = 0;
-for (var i = 0; i < 21056; i++)
+const findPincodeData = (pin) => // this fn takes pincode as input and returns the entire array in a const called originData or destinationData
 {
-    if (obj[i].Pin === origin)
+    for (let i = 0; i < pincodes.length; i++)
     {
-        // console.log(obj[i]);
-        console.log("Pin:\t\t\t\t\t" + obj[i].Pin);
-        console.log("State:\t\t\t\t\t" + obj[i].STATE);
-        console.log("ODA:\t\t\t\t\t" + obj[i].ODA);
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
-        var State = obj[i].STATE;
-        if (obj[i].ODA)
+        if (pincodes[i].Pin === pin)
         {
-            ODA = ODA + 800
+            return pincodes[i];
         }
-        flag1 = 1;
-        break;
     }
-}
-if (flag1 === 0)
+    return null;
+};
+
+const findStateAssociatedCode = (state) => // this fn takes state name (using the array data from above findPincodeData()) and returns the State Associated Codes
+{
+    for (let i = 0; i < stateAssociatedCodes.length; i++)
+    {
+        if (stateAssociatedCodes[i].State === state)
+        {
+            return stateAssociatedCodes[i].Associated_Codes;
+        }
+    }
+    return null;
+};
+
+const findRate = (originCode, destinationCode) =>
+{
+    for (let i = 0; i < bothAssociatedCodes.length; i++)
+    {
+        if (bothAssociatedCodes[i].State_Associate_Code === originCode)
+        {
+            return bothAssociatedCodes[i][destinationCode];
+        }
+    }
+    return null;
+};
+
+const originData = findPincodeData(origin);
+if (originData) // it could be array data or null
+{
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    console.log("The data for Origin:");
+    console.log(`Pin:\t\t\t\t\t${originData.Pin}`);
+    console.log(`State:\t\t\t\t\t${originData.STATE}`);
+    console.log(`ODA:\t\t\t\t\t${originData.ODA}`);
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+    originCode = findStateAssociatedCode(originData.STATE); // with this fn we input state name and get State Associated Code
+    if (originData.ODA) // oda cost check @hassanqari9check for oda test here
+    {
+        oda = 800;
+    }
+} else
 {
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     console.log("No Data Found");
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
 }
 
 console.log("......................................................");
-for (var i = 0; i < 59; i++)
+const destinationData = findPincodeData(destination);
+if (destinationData) // it could be array data or null
 {
-    if (obj2[i].State === State)
-    {
-        // console.log(obj2[i]);
-        console.log("State:\t\t\t\t\t" + obj2[i].State);
-        console.log("Associate Origin State Code:\t\t" + obj2[i].Associated_Codes);
-        var origin_code = obj2[i].Associated_Codes
-    }
-}
-console.log("......................................................");
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    console.log("The data for Destination:");
+    console.log(`Pin:\t\t\t\t\t${destinationData.Pin}`);
+    console.log(`State:\t\t\t\t\t${destinationData.STATE}`);
+    console.log(`ODA:\t\t\t\t\t${destinationData.ODA}`);
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-// destination
-console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-console.log("The data for Destination:")
-var flag2 = 0;
-for (var i = 0; i < 21056; i++)
-{
-    if (obj[i].Pin == destination)
+    destinationCode = findStateAssociatedCode(destinationData.STATE); // with this fn we input state name and get State Associated Code
+    if (destinationData.ODA) // oda cost check
     {
-        // console.log(obj[i]);
-        console.log("Pin:\t\t\t\t\t" + obj[i].Pin);
-        console.log("State:\t\t\t\t\t" + obj[i].STATE);
-        console.log("ODA:\t\t\t\t\t" + obj[i].ODA);
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
-        var State2 = obj[i].STATE
-        if (obj[i].ODA)
-        {
-            ODA = ODA + 800
-        }
-        flag2 = 1;
-        break;
+        oda += 800;
     }
-}
-if (flag2 === 0)
+} else
 {
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     console.log("No Data Found");
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
 }
 
 console.log("......................................................");
-for (var i = 0; i < 59; i++)
+console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+console.log(`Associate Origin State Code:\t\t${originCode}`);
+console.log(`Associate Destination State Code:\t${destinationCode}`);
+
+const rate = findRate(originCode, destinationCode);
+if (rate) // if not null and has State Associated Codes
 {
-    if (obj2[i].State === State2)
-    {
-        // console.log(obj2[i]);
-        console.log("State:\t\t\t\t\t" + obj2[i].State);
-        console.log("Associate Destination State Code:\t" + obj2[i].Associated_Codes);
-        var destination_code = obj2[i].Associated_Codes
-    }
+    console.log(`Rate from 2D Table:\t\t\t${rate}`);
+    console.log("......................................................");
+    console.log(`Total ODA:\t\t\t\t${oda}`);
+    console.log(`Total Cost: (rate * weight) + ODA = \t${(rate * weight) + oda}`);
 }
-console.log("......................................................");
-
-console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
-//final
-console.log("Associate Origin State Code:\t\t" + origin_code);
-console.log("Associate Destination State Code:\t" + destination_code);
-for (let i = 0; i < 17; i++)
-{
-    if (obj3[i].State_Associate_Code === origin_code)
-    {
-        // console.log(obj3[i]);
-        console.log("Rate from 2D Table: " + obj3[i][destination_code]);
-        var rate = obj3[i][destination_code]
-        break;
-    }
-}
-
-console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-console.log("......................................................");
-console.log("Total ODA:\t\t\t\t" + ODA);
-console.log(`Total Cost: (rate * weight) + ODA = \t${(rate * weight) + ODA}`);
-console.log("......................................................");
-console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
-
-
-/*
-21073 // total number of arrays in DATAVALID
-
-fix else using flag
-
-if oda is true then add 0 
-else add 800
-
-*/
-
-
