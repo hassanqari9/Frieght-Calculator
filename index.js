@@ -10,78 +10,122 @@ const getJson3 = require("./jsonData3.js")
 const jsonData3 = getJson3()
 var obj3 = JSON.parse(jsonData3);
 
-const origin = 492010
+const origin = 577573
 const destination = 641022
+const weight = 100
 
+var ODA = 0
 // Access the data
 //origin
-console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-console.log("Origin Ka HAi yeh")
-var flag = 0;
-for (var i = 0; i<obj.DATAVALID.length; i++)
+console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+console.log("The data for Origin:")
+var flag1 = 0;
+for (var i = 0; i < 21056; i++)
 {
-    var test = obj.DATAVALID[i].Column1
-    if (test === origin) {
-        // console.log(obj.DATAVALID[i]);
-        console.log(obj.DATAVALID[i].Column1); 
-        console.log(obj.DATAVALID[i].N2);
-        var State = obj.DATAVALID[i].N2;
-        flag = 1;
+    if (obj[i].Pin === origin)
+    {
+        // console.log(obj[i]);
+        console.log("Pin:\t\t\t\t\t" + obj[i].Pin);
+        console.log("State:\t\t\t\t\t" + obj[i].STATE);
+        console.log("ODA:\t\t\t\t\t" + obj[i].ODA);
+        console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+        var State = obj[i].STATE;
+        if (obj[i].ODA)
+        {
+            ODA = ODA + 800
+        }
+        flag1 = 1;
         break;
-    }  
+    }
 }
-if (flag === 0) {
+if (flag1 === 0)
+{
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     console.log("No Data Found");
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
 }
-console.log("....................");
-for (var i=0; i<59; i++)
+
+console.log("......................................................");
+for (var i = 0; i < 59; i++)
 {
     if (obj2[i].State === State)
     {
         // console.log(obj2[i]);
-        console.log(obj2[i].State);
-        console.log(obj2[i].Code);
-        var origin_code = obj2[i].Code
+        console.log("State:\t\t\t\t\t" + obj2[i].State);
+        console.log("Associate Origin State Code:\t\t" + obj2[i].Associated_Codes);
+        var origin_code = obj2[i].Associated_Codes
     }
 }
+console.log("......................................................");
 
 // destination
-console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-console.log("destination ka yeh yeh")
-for (var i = 0; i<21074; i++)
+console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+console.log("The data for Destination:")
+var flag2 = 0;
+for (var i = 0; i < 21056; i++)
 {
-    if (obj.DATAVALID[i].Column1 == destination) {
-        // console.log(obj.DATAVALID[i]);
-        console.log(obj.DATAVALID[i].Column1); 
-        console.log(obj.DATAVALID[i].N2);
-        var State2 = obj.DATAVALID[i].N2
+    if (obj[i].Pin == destination)
+    {
+        // console.log(obj[i]);
+        console.log("Pin:\t\t\t\t\t" + obj[i].Pin);
+        console.log("State:\t\t\t\t\t" + obj[i].STATE);
+        console.log("ODA:\t\t\t\t\t" + obj[i].ODA);
+        console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+        var State2 = obj[i].STATE
+        if (obj[i].ODA)
+        {
+            ODA = ODA + 800
+        }
+        flag2 = 1;
         break;
     }
 }
-console.log("...................");
-for (var i=0; i<59; i++)
+if (flag2 === 0)
+{
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    console.log("No Data Found");
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
+}
+
+console.log("......................................................");
+for (var i = 0; i < 59; i++)
 {
     if (obj2[i].State === State2)
     {
         // console.log(obj2[i]);
-        console.log(obj2[i].State);
-        console.log(obj2[i].Code);
-        var destination_code = obj2[i].Code
+        console.log("State:\t\t\t\t\t" + obj2[i].State);
+        console.log("Associate Destination State Code:\t" + obj2[i].Associated_Codes);
+        var destination_code = obj2[i].Associated_Codes
     }
 }
-console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+console.log("......................................................");
+
+console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
 //final
-console.log(origin_code);
-console.log(destination_code);
-for (let i = 0; i < 17; i++) {
-    if (obj3[i].origin_code === origin_code) {
+console.log("Associate Origin State Code:\t\t" + origin_code);
+console.log("Associate Destination State Code:\t" + destination_code);
+for (let i = 0; i < 17; i++)
+{
+    if (obj3[i].State_Associate_Code === origin_code)
+    {
         // console.log(obj3[i]);
-        console.log(obj3[i][destination_code]);
+        console.log("Rate from 2D Table: " + obj3[i][destination_code]);
+        var rate = obj3[i][destination_code]
         break;
     }
 }
 
+console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+console.log("......................................................");
+console.log("Total ODA:\t\t\t\t" + ODA);
+console.log(`Total Cost: (rate * weight) + ODA = \t${(rate * weight) + ODA}`);
+console.log("......................................................");
+console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
 
 

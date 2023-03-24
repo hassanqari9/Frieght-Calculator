@@ -1,8 +1,8 @@
-const jsonData3 = 
-`
+const jsonData3 =
+    `
 [
     {
-     "origin_code": "N1",
+     "State_Associate_Code": "N1",
      "N1": 7.5,
      "N2": 7.5,
      "N3": 7.5,
@@ -21,7 +21,7 @@ const jsonData3 =
      "NE2": 24
     },
     {
-     "origin_code": "N2",
+     "State_Associate_Code": "N2",
      "N1": 7.5,
      "N2": 7.5,
      "N3": 7.5,
@@ -40,7 +40,7 @@ const jsonData3 =
      "NE2": 24
     },
     {
-     "origin_code": "N3",
+     "State_Associate_Code": "N3",
      "N1": 7.5,
      "N2": 7.5,
      "N3": 7.5,
@@ -59,7 +59,7 @@ const jsonData3 =
      "NE2": 24
     },
     {
-     "origin_code": "N4",
+     "State_Associate_Code": "N4",
      "N1": 7.5,
      "N2": 7.5,
      "N3": 7.5,
@@ -78,7 +78,7 @@ const jsonData3 =
      "NE2": 25.5
     },
     {
-     "origin_code": "C1",
+     "State_Associate_Code": "C1",
      "N1": 10.5,
      "N2": 10.5,
      "N3": 12,
@@ -97,7 +97,7 @@ const jsonData3 =
      "NE2": 18
     },
     {
-     "origin_code": "C2",
+     "State_Associate_Code": "C2",
      "N1": 10.5,
      "N2": 12,
      "N3": 12,
@@ -116,7 +116,7 @@ const jsonData3 =
      "NE2": 19.5
     },
     {
-     "origin_code": "W1",
+     "State_Associate_Code": "W1",
      "N1": 9,
      "N2": 9,
      "N3": 10.5,
@@ -135,7 +135,7 @@ const jsonData3 =
      "NE2": 22.5
     },
     {
-     "origin_code": "W2",
+     "State_Associate_Code": "W2",
      "N1": 9,
      "N2": 9,
      "N3": 10.5,
@@ -154,7 +154,7 @@ const jsonData3 =
      "NE2": 22.5
     },
     {
-     "origin_code": "S1",
+     "State_Associate_Code": "S1",
      "N1": 10.5,
      "N2": 10.5,
      "N3": 12,
@@ -173,7 +173,7 @@ const jsonData3 =
      "NE2": 22.5
     },
     {
-     "origin_code": "S2",
+     "State_Associate_Code": "S2",
      "N1": 10.5,
      "N2": 12,
      "N3": 12,
@@ -192,7 +192,7 @@ const jsonData3 =
      "NE2": 22.5
     },
     {
-     "origin_code": "S3",
+     "State_Associate_Code": "S3",
      "N1": 10.5,
      "N2": 12,
      "N3": 12,
@@ -211,7 +211,7 @@ const jsonData3 =
      "NE2": 24
     },
     {
-     "origin_code": "S4",
+     "State_Associate_Code": "S4",
      "N1": 12,
      "N2": 12,
      "N3": 13.5,
@@ -230,7 +230,7 @@ const jsonData3 =
      "NE2": 25.5
     },
     {
-     "origin_code": "E1",
+     "State_Associate_Code": "E1",
      "N1": 10.5,
      "N2": 10.5,
      "N3": 12,
@@ -249,7 +249,7 @@ const jsonData3 =
      "NE2": 15
     },
     {
-     "origin_code": "E2",
+     "State_Associate_Code": "E2",
      "N1": 10.5,
      "N2": 12,
      "N3": 12,
@@ -268,7 +268,7 @@ const jsonData3 =
      "NE2": 16.5
     },
     {
-     "origin_code": "NE1",
+     "State_Associate_Code": "NE1",
      "N1": 19.5,
      "N2": 19.5,
      "N3": 21,
@@ -287,7 +287,7 @@ const jsonData3 =
      "NE2": 12
     },
     {
-     "origin_code": "NE2",
+     "State_Associate_Code": "NE2",
      "N1": 22.5,
      "N2": 24,
      "N3": 24,
@@ -309,7 +309,8 @@ const jsonData3 =
 `;
 
 
-const getJson3 = function() {
+const getJson3 = function ()
+{
     return jsonData3
 }
 
