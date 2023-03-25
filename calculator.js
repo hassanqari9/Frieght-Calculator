@@ -1,9 +1,8 @@
 // Data from previous file
-const {weight, baseFreight, oda} = require("./index")
+const { weight, baseFreight, oda } = require("./index")
 // const baseFreight = 10;
 // const weight = 151;
 // const oda = 1000;
-console.log(weight);
 
 const totalFreight = (baseFreight * weight); // using formula
 const processingFee = 50 // this is constant(fixed)

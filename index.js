@@ -6,8 +6,8 @@ const pincodes = JSON.parse(getPincodes());
 const stateAssociatedCodes = JSON.parse(getStateAssociatedCodes());
 const bothAssociatedCodes = JSON.parse(getBothAssociatedCodes());
 
-const origin = 683504;
-const destination = 757093;
+const origin = 683;
+const destination = 75;
 var weight = 1000;
 
 let originCode = "";
@@ -124,8 +124,7 @@ const odaChecker = () =>
     //     oda = 0; // charge 0
     //     console.log("else mai ghaya");
     // }
-
-    oda = (originData.ODA || destinationData.ODA) ? (weight <= 800 ? 800 : weight) : 0; // using ternary operator
+    oda = (originData?.ODA || destinationData?.ODA) ? (weight <= 800 ? 800 : weight) : 0; // using ternary operator // Using optional chaining ('?.') with 'originData' and 'destinationData' will avoid errors if either of them is 'null'or 'undefined'.
 }
 odaChecker();
 console.log(`Total ODA:\t\t\t\t${oda}`);
