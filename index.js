@@ -133,3 +133,9 @@ console.log(`Total ODA:\t\t\t\t${oda}`);
 //weight send to another file
 //oda send to another file
 //baseFreight send to another file
+
+module.exports = {
+    weight,
+    baseFreight,
+    oda
+};
