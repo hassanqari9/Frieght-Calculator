@@ -8,9 +8,8 @@ const bothAssociatedCodes = JSON.parse(getBothAssociatedCodes());
 
 const origin = 683504;
 const destination = 757093;
-const weight = 100;
+var weight = 1000;
 
-let oda = 0;
 let originCode = "";
 let destinationCode = "";
 
@@ -38,7 +37,7 @@ const findStateAssociatedCode = (state) => // this fn takes state name (using th
     return null;
 };
 
-const findRate = (originCode, destinationCode) =>
+const findBaseFreight = (originCode, destinationCode) =>
 {
     for (let i = 0; i < bothAssociatedCodes.length; i++)
     {
@@ -50,8 +49,8 @@ const findRate = (originCode, destinationCode) =>
     return null;
 };
 
-const originData = findPincodeData(origin);
-if (originData) // it could be array data or null
+const originData = findPincodeData(origin); // stores the entire details related to the pincode
+if (originData) // if correct pincode is entered then
 {
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     console.log("The data for Origin:");
@@ -61,10 +60,6 @@ if (originData) // it could be array data or null
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
     originCode = findStateAssociatedCode(originData.STATE); // with this fn we input state name and get State Associated Code
-    if (originData.ODA) // oda cost check @hassanqari9check for oda test here
-    {
-        oda = 800;
-    }
 } else
 {
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -74,7 +69,7 @@ if (originData) // it could be array data or null
 
 console.log("......................................................");
 const destinationData = findPincodeData(destination);
-if (destinationData) // it could be array data or null
+if (destinationData) // if correct pincode is entered then (this is same as above)
 {
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     console.log("The data for Destination:");
@@ -84,10 +79,6 @@ if (destinationData) // it could be array data or null
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
     destinationCode = findStateAssociatedCode(destinationData.STATE); // with this fn we input state name and get State Associated Code
-    if (destinationData.ODA) // oda cost check
-    {
-        oda += 800;
-    }
 } else
 {
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -100,11 +91,43 @@ console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 console.log(`Associate Origin State Code:\t\t${originCode}`);
 console.log(`Associate Destination State Code:\t${destinationCode}`);
 
-const rate = findRate(originCode, destinationCode);
-if (rate) // if not null and has State Associated Codes
+
+
+const BaseFreight = findBaseFreight(originCode, destinationCode);
+if (BaseFreight) // if not null and has State Associated Codes
 {
-    console.log(`Rate from 2D Table:\t\t\t${rate}`);
+    console.log(`BaseFreight from 2D Table:\t\t${BaseFreight}`);
     console.log("......................................................");
-    console.log(`Total ODA:\t\t\t\t${oda}`);
-    console.log(`Total Cost: (rate * weight) + ODA = \t${(rate * weight) + oda}`);
+    // console.log(`Total Cost: (BaseFreight * weight) + ODA = \t${(BaseFreight * weight) + oda}`);
 }
+
+console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+console.log("origin ODA: " + originData.ODA + " & destination ODA: " + destinationData.ODA); // @hassanqari9 remove
+
+var oda = 0;
+const odaChecker = () =>
+{
+    // if (1 || 1)
+    if (originData.ODA || destinationData.ODA)
+    {
+        if (weight <= 800) // if weight is less than or equal to 800
+        {
+            oda += 800; // then charge 800
+        }
+        else if (weight > 800) // if weight is greater than 800
+        {
+            oda = weight // then charge 800 and then 1 per additional additional weight, which turns out to be equal to weight
+        }
+    }
+    else // when both Origin and Destination have no ODA charges
+    {
+        oda += 0; // charge 0
+        console.log("else mai ghaya");
+    }
+}
+odaChecker();
+console.log(`Total ODA:\t\t\t\t${oda}`);
+
+//weight send to another file
+//oda send to another file
+//BaseFreight send to another file
