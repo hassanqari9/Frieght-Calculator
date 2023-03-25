@@ -12,6 +12,7 @@ var weight = 1000;
 
 let originCode = "";
 let destinationCode = "";
+var oda = 0;
 
 const findPincodeData = (pin) => // this fn takes pincode as input and returns the entire array in a const called originData or destinationData
 {
@@ -93,41 +94,42 @@ console.log(`Associate Destination State Code:\t${destinationCode}`);
 
 
 
-const BaseFreight = findBaseFreight(originCode, destinationCode);
-if (BaseFreight) // if not null and has State Associated Codes
+const baseFreight = findBaseFreight(originCode, destinationCode);
+if (baseFreight) // if not null and has State Associated Codes
 {
-    console.log(`BaseFreight from 2D Table:\t\t${BaseFreight}`);
+    console.log(`BaseFreight from 2D Table:\t\t${baseFreight}`);
     console.log("......................................................");
-    // console.log(`Total Cost: (BaseFreight * weight) + ODA = \t${(BaseFreight * weight) + oda}`);
+    // console.log(`Total Cost: (baseFreight * weight) + ODA = \t${(baseFreight * weight) + oda}`);
 }
 
 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 console.log("origin ODA: " + originData.ODA + " & destination ODA: " + destinationData.ODA); // @hassanqari9 remove
 
-var oda = 0;
 const odaChecker = () =>
 {
     // if (1 || 1)
-    if (originData.ODA || destinationData.ODA)
-    {
-        if (weight <= 800) // if weight is less than or equal to 800
-        {
-            oda += 800; // then charge 800
-        }
-        else if (weight > 800) // if weight is greater than 800
-        {
-            oda = weight // then charge 800 and then 1 per additional additional weight, which turns out to be equal to weight
-        }
-    }
-    else // when both Origin and Destination have no ODA charges
-    {
-        oda += 0; // charge 0
-        console.log("else mai ghaya");
-    }
+    // if (originData.ODA || destinationData.ODA)
+    // {
+    //     if (weight <= 800) // if weight is less than or equal to 800
+    //     {
+    //         oda = 800; // then charge 800
+    //     }
+    //     else if (weight > 800) // if weight is greater than 800
+    //     {
+    //         oda = weight // then charge 800 and then 1 per additional additional weight, which turns out to be equal to weight
+    //     }
+    // }
+    // else // when both Origin and Destination have no ODA charges
+    // {
+    //     oda = 0; // charge 0
+    //     console.log("else mai ghaya");
+    // }
+
+    oda = (originData.ODA || destinationData.ODA) ? (weight <= 800 ? 800 : weight) : 0; // using ternary operator
 }
 odaChecker();
 console.log(`Total ODA:\t\t\t\t${oda}`);
 
 //weight send to another file
 //oda send to another file
-//BaseFreight send to another file
+//baseFreight send to another file
