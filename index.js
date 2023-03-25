@@ -6,9 +6,20 @@ const pincodes = JSON.parse(getPincodes());
 const stateAssociatedCodes = JSON.parse(getStateAssociatedCodes());
 const bothAssociatedCodes = JSON.parse(getBothAssociatedCodes());
 
-const origin = 683;
-const destination = 75;
-var weight = 1000;
+const origin = 423702;
+const destination = 412410;
+const weight = 1000;
+
+if (weight === 0)
+{
+    console.log("Weight is zero.");
+    process.exit(1)
+
+} else if (weight < 0)
+{
+    console.log("Weight is negative.");
+    process.exit(1)
+}
 
 let originCode = "";
 let destinationCode = "";
@@ -61,10 +72,12 @@ if (originData) // if correct pincode is entered then
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
     originCode = findStateAssociatedCode(originData.STATE); // with this fn we input state name and get State Associated Code
+
 } else
 {
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    console.log("No Data Found");
+    console.log("We don't accept orders from this location at this moment. {Dev log: Origin Data not found}");
+    process.exit(1);
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 }
 
@@ -80,17 +93,19 @@ if (destinationData) // if correct pincode is entered then (this is same as abov
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
     destinationCode = findStateAssociatedCode(destinationData.STATE); // with this fn we input state name and get State Associated Code
+
 } else
 {
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    console.log("No Data Found");
+    console.log("We don't deliver orders to this location at this moment. {Dev log: Destination Data not found}");
+    process.exit(1);
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 }
 
 console.log("......................................................");
 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-console.log(`Associate Origin State Code:\t\t${originCode}`);
-console.log(`Associate Destination State Code:\t${destinationCode}`);
+console.log(`Associate Origin State Code:\t\t${originCode}`); // For debugging only
+console.log(`Associate Destination State Code:\t${destinationCode}`); // For debugging only
 
 
 
@@ -99,42 +114,22 @@ if (baseFreight) // if not null and has State Associated Codes
 {
     console.log(`BaseFreight from 2D Table:\t\t${baseFreight}`);
     console.log("......................................................");
-    // console.log(`Total Cost: (baseFreight * weight) + ODA = \t${(baseFreight * weight) + oda}`);
+}
+else // although this will not happen unless some modifications have been made to JSON (3-Associated-Codes(2D-Array).js) incorrectly
+{
+    console.log("404, Data not found!");
+    process.exit(1);
 }
 
 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-console.log("origin ODA: " + originData.ODA + " & destination ODA: " + destinationData.ODA); // @hassanqari9 remove
+
 
 const odaChecker = () =>
 {
-    // if (1 || 1)
-    // if (originData.ODA || destinationData.ODA)
-    // {
-    //     if (weight <= 800) // if weight is less than or equal to 800
-    //     {
-    //         oda = 800; // then charge 800
-    //     }
-    //     else if (weight > 800) // if weight is greater than 800
-    //     {
-    //         oda = weight // then charge 800 and then 1 per additional additional weight, which turns out to be equal to weight
-    //     }
-    // }
-    // else // when both Origin and Destination have no ODA charges
-    // {
-    //     oda = 0; // charge 0
-    //     console.log("else mai ghaya");
-    // }
     oda = (originData?.ODA || destinationData?.ODA) ? (weight <= 800 ? 800 : weight) : 0; // using ternary operator // Using optional chaining ('?.') with 'originData' and 'destinationData' will avoid errors if either of them is 'null'or 'undefined'.
 }
+
 odaChecker();
 console.log(`Total ODA:\t\t\t\t${oda}`);
 
-//weight send to another file
-//oda send to another file
-//baseFreight send to another file
-
-module.exports = {
-    weight,
-    baseFreight,
-    oda
-};
+module.exports = { weight, baseFreight, oda };
