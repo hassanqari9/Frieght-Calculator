@@ -1,10 +1,10 @@
-const getPincodes = require("./Data/1-Pincodes.js");
-const getStateAssociatedCodes = require("./Data/2-State-Associated-Codes.js");
-const getBothAssociatedCodes = require("./Data/3-Associated-Codes(2D-Array).js");
+import { Pincodes } from './Data/1-Pincodes.js';
+import { State_Associate_Codes } from './Data/2-State-Associated-Codes.js';
+import { Both_Associated_Codes } from './Data/3-Associated-Codes(2D-Array).js';
 
-const pincodes = JSON.parse(getPincodes());
-const stateAssociatedCodes = JSON.parse(getStateAssociatedCodes());
-const bothAssociatedCodes = JSON.parse(getBothAssociatedCodes());
+const pincodes = JSON.parse(Pincodes);
+const stateAssociatedCodes = JSON.parse(State_Associate_Codes);
+const bothAssociatedCodes = JSON.parse(Both_Associated_Codes);
 
 const origin = 423702;
 const destination = 412410;
@@ -132,4 +132,4 @@ const odaChecker = () =>
 odaChecker();
 console.log(`Total ODA:\t\t\t\t${oda}`);
 
-module.exports = { weight, baseFreight, oda };
+export { weight, baseFreight, oda };

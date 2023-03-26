@@ -239,9 +239,4 @@ const State_Associate_Codes = `
    ]
 `;
 
-const getState_Associate_Codes = function ()
-{
-    return State_Associate_Codes
-}
-
-module.exports = getState_Associate_Codes;
+export { State_Associate_Codes };

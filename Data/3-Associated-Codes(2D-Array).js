@@ -309,9 +309,4 @@ const Both_Associated_Codes =
 `;
 
 
-const getBoth_Associated_Codes = function ()
-{
-    return Both_Associated_Codes
-}
-
-module.exports = getBoth_Associated_Codes;
+export { Both_Associated_Codes };

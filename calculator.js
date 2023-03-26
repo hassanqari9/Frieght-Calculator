@@ -1,4 +1,4 @@
-const { weight, baseFreight, oda } = require("./index");
+import { weight, baseFreight, oda } from './index.js';
 
 // Constants
 const PROCESSING_FEE = 50;
