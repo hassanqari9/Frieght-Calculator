@@ -27,5 +27,5 @@ console.log("PreTax Charges:\t\t\t" + preTaxCharges);
 console.log("GST:\t\t\t\t" + GST); // round off decimals
 console.log("Total amount to be paid:\t" + totalAmount); // use ceiling fn
 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
+document.querySelector('h1').innerHTML = totalAmount;
 // Contact @AarishShah when you are done with this. Both Files need to be obfuscated before publishing.
