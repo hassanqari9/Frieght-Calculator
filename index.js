@@ -158,12 +158,12 @@ function handleClick(e)
 
     // Output
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    console.log("Total Freight:\t\t\t" + totalFreight);
-    console.log("Fuel:\t\t\t\t" + fuel);
-    console.log("Handling Charges:\t\t" + handlingCharges);
-    console.log("FM_Charges:\t\t\t" + FM_Charges);
-    console.log("PreTax Charges:\t\t\t" + preTaxCharges);
-    console.log("GST:\t\t\t\t" + GST); // round off decimals
+    console.log("Total Freight:\t\t\t\t" + totalFreight);
+    console.log("Fuel:\t\t\t\t\t\t" + fuel);
+    console.log("Handling Charges:\t\t\t" + handlingCharges);
+    console.log("FM_Charges:\t\t\t\t\t" + FM_Charges);
+    console.log("PreTax Charges:\t\t\t\t" + preTaxCharges);
+    console.log("GST:\t\t\t\t\t\t" + GST); // round off decimals
     console.log("Total amount to be paid:\t" + totalAmount); // use ceiling fn
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     document.querySelector('h1').innerHTML = totalAmount;
