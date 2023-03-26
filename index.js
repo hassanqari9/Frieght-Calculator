@@ -18,12 +18,14 @@ function handleClick(e)
     if (weight === 0)
     {
         console.log("Weight is zero.");
-        return;
+        throw new Error("0 VALUE NOT ALLOWED"); 
+        
 
     } else if (weight < 0)
     {
         console.log("Weight is negative.");
-        return;
+        throw new Error("NEGATIVE VALUE NOT ALLOWED"); 
+        
     }
 
     let originCode = "";
@@ -81,8 +83,8 @@ function handleClick(e)
     } else
     {
         console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        console.log("We don't accept orders from this location at this moment. {Dev log: Origin Data not found}");
-        return;;
+        console.log("We don't accept orders from this location at this moment.");
+        throw new Error("{Dev log: Origin Data not found}"); 
         console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 
@@ -102,8 +104,8 @@ function handleClick(e)
     } else
     {
         console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        console.log("We don't deliver orders to this location at this moment. {Dev log: Destination Data not found}");
-        return;;
+        console.log("We don't deliver orders to this location at this moment.");
+        throw new Error("{Dev log: Destination Data not found}");    
         console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 
@@ -123,7 +125,7 @@ function handleClick(e)
     else // although this will not happen unless some modifications have been made to JSON (3-Associated-Codes(2D-Array).js) incorrectly
     {
         console.log("404, Data not found!");
-        return;;
+        throw new Error("404 ERROR");    
     }
 
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
