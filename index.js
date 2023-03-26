@@ -6,9 +6,13 @@ const pincodes = JSON.parse(Pincodes);
 const stateAssociatedCodes = JSON.parse(State_Associate_Codes);
 const bothAssociatedCodes = JSON.parse(Both_Associated_Codes);
 
-const origin = 423702;
-const destination = 412410;
-const weight = 1000;
+console.log("initiate");
+document.querySelector("button").addEventListener("click",handleClick); 
+   function handleClick(e) {
+    e.preventDefault()
+const origin = parseInt(document.querySelector('#origin').value);
+const destination = parseInt(document.querySelector('#destination').value);
+const weight = parseInt(document.querySelector('#weight').value);
 
 if (weight === 0)
 {
@@ -132,4 +136,33 @@ const odaChecker = () =>
 odaChecker();
 console.log(`Total ODA:\t\t\t\t${oda}`);
 
-export { weight, baseFreight, oda };
+// Constants
+const PROCESSING_FEE = 50;
+// const INSURANCE = 50; // value given by client
+const INSURANCE = 566.40; // value used in excel file
+
+
+// Calculations
+const totalFreight = baseFreight * weight;
+const processingFee = PROCESSING_FEE;
+const fuel = (15 * totalFreight) / 100;
+const handlingCharges = weight <= 150 ? 0 : weight;
+const FM_Charges = weight;
+const insurance = INSURANCE;
+const preTaxCharges = totalFreight + oda + processingFee + fuel + handlingCharges + FM_Charges + insurance;
+const GST = (12 * preTaxCharges) / 100;
+const totalAmount = preTaxCharges + GST;
+
+// Output
+console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+console.log("Total Freight:\t\t\t" + totalFreight);
+console.log("Fuel:\t\t\t\t" + fuel);
+console.log("Handling Charges:\t\t" + handlingCharges);
+console.log("FM_Charges:\t\t\t" + FM_Charges);
+console.log("PreTax Charges:\t\t\t" + preTaxCharges);
+console.log("GST:\t\t\t\t" + GST); // round off decimals
+console.log("Total amount to be paid:\t" + totalAmount); // use ceiling fn
+console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+document.querySelector('h1').innerHTML = totalAmount;
+
+}
