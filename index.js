@@ -6,9 +6,9 @@ const pincodes = JSON.parse(getPincodes());
 const stateAssociatedCodes = JSON.parse(getStateAssociatedCodes());
 const bothAssociatedCodes = JSON.parse(getBothAssociatedCodes());
 
-const origin = 423702;
-const destination = 412410;
-const weight = 1000;
+const origin = 190001;
+const destination = 180001;
+const weight = 100;
 
 if (weight === 0)
 {
