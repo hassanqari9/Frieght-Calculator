@@ -83,7 +83,7 @@ function handleClick(e) {
         console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 
-    //console.log("......................................................");
+    console.log("......................................................");
     const destinationData = findPincodeData(destination);
     if (destinationData) // if correct pincode is entered then (this is same as above)
     {
@@ -156,7 +156,7 @@ function handleClick(e) {
     totalAmount = totalAmount < minimumAmount ? minimumAmount : preTaxCharges + GST;
 
 
-    Output
+    // Output
     console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     console.log("Total Freight:\t\t\t\t" + totalFreight);
     console.log("Fuel:\t\t\t\t\t" + fuel);
